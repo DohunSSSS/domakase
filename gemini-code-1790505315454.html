@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMAKASE - Fine Dining Signature Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+KR:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #08080a;
+            --card-bg: #111116;
+            --accent-gold: #c5a059;
+            --accent-gold-light: #e6ca94;
+            --text-main: #f5f5f7;
+            --text-muted: #9a9ab0;
+            --border-gold: rgba(197, 160, 89, 0.3);
+            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 300;
+            line-height: 1.9;
+            padding: 60px 20px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 70%),
+                radial-gradient(circle at 50% 100%, rgba(197, 160, 89, 0.05) 0%, transparent 70%);
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* Gold Gradient Text Helper */
+        .gold-text {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            border-bottom: 1px solid var(--border-gold);
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        header::after {
+            content: "✦";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-dark);
+            padding: 0 15px;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+        }
+
+        .brand-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            color: var(--accent-gold-light);
+            text-transform: uppercase;
+            margin-bottom: 35px;
+        }
+
+        .main-heading {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .dedication {
+            font-size: 1.05rem;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .intro-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 620px;
+            margin: 0 auto;
+            word-break: keep-all;
+            line-height: 2;
+        }
+
+        /* Course Item Card */
+        .course-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            margin-bottom: 70px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(197, 160, 89, 0.7);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(197, 160, 89, 0.15);
+        }
+
+        /* Elegant Frame Effect Inside Card */
+        .course-card::before {
+            content: "";
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .course-card {
+                flex-direction: row;
+            }
+            .course-card:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+            .course-img-wrapper {
+                width: 48%;
+            }
+            .course-content {
+                width: 52%;
+            }
+        }
+
+        /* Image Frame & Styling */
+        .course-img-wrapper {
+            position: relative;
+            min-height: 320px;
+            overflow: hidden;
+            padding: 15px;
+        }
+
+        .course-img-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-gold);
+        }
+
+        .course-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9) contrast(1.05);
+            transition: transform 0.8s ease, filter 0.8s ease;
+        }
+
+        .course-card:hover .course-img {
+            transform: scale(1.06);
+            filter: brightness(1) contrast(1.1);
+        }
+
+        /* Content Area */
+        .course-content {
+            padding: 45px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .course-header-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed rgba(197, 160, 89, 0.2);
+            padding-bottom: 8px;
+        }
+
+        .course-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .course-category {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .course-title {
+            font-size: 1.45rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 18px;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+
+        .course-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            word-break: keep-all;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            font-size: 0.85rem;
+            color: var(--accent-gold-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-item::before {
+            content: "◆";
+            font-size: 0.5rem;
+            color: var(--accent-gold);
+            margin-right: 10px;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            margin-top: 100px;
+            padding: 60px 40px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            position: relative;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+
+        .summary-section::before {
+            content: "";
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            pointer-events: none;
+        }
+
+        .summary-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px 20px;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            transition: border-color 0.3s;
+        }
+
+        .summary-card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .summary-card-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .summary-card-name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .summary-card-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            word-break: keep-all;
+        }
+
+        .closing-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--accent-gold-light);
+            margin-top: 30px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 0 20px;
+            color: var(--text-muted);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="brand-title gold-text">DOMAKASE</div>
+        <div class="subtitle">FINE DINING SIGNATURE COURSE</div>
+        <h1 class="main-heading">도마카세 시그니처 코스</h1>
+        <p class="dedication">오로지 민제만을 위한 프리미엄 레스토랑</p>
+        <p class="intro-text">
+            독일, 이탈리아, 프랑스, 튀르키예 유학 생활에서 배운 다채로운 요리 헤리티지를 Dohun 셰프만의 현대적인 감각으로 재해석했습니다.
+        </p>
+    </header>
+
+    <main>
+        <!-- Course 01 -->
+        <article class="course-card">
+            <div class="course-img-wrapper">
+                <div class="course-img-container">
+                    <img src="onion soup.png" alt="프랑스 전통 캐러멜라이징 양파수프" class="course-img">
+                </div>
+            </div>
+            <div class="course-content">
+                <div class="course-header-meta">
+                    <span class="course-number gold-text">COURSE 01</span>
+                    <span class="course-category">APPETIZER</span>
+                </div>
+                <h2 class="course-title">프랑스 전통 캐러멜라이징 양파수프</h2>
+                <p class="course-desc">
+                    오랜 시간 정성껏 볶아낸 양파의 풍부한 단맛과 고소한 그뤼에르 치즈, 바삭한 바게트가 어우러진 프렌치 클래식
+                </p>
+                <ul class="feature-list">
+                    <li class="feature-item">4시간 저온 브레이징 양파의 극대화된 감칠맛</li>
+                    <li class="feature-item">노릇하게 구워낸 에멘탈 & 그뤼에르 치즈 크러스트</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- Course 02 -->
+        <article class="course-card">
+            <div class="course-img-wrapper">
+                <div class="course-img-container">
+                    <img src="gambas.png" alt="지중해 카쉬의 풍미가 담긴 칠리 감바스" class="course-img">
+                </div>
+            </div>
+            <div class="course-content">
+                <div class="course-header-meta">
+                    <span class="course-number gold-text">COURSE 02</span>
+                    <span class="course-category">FIRST MAIN</span>
+                </div>
+                <h2 class="course-title">지중해 카쉬의 풍미가 담긴 칠리 감바스</h2>
+                <p class="course-desc">
+                    터키 카쉬 해변의 이국적인 향신료를 더해 탱글한 새우와 매콤한 올리브 오일이 자아내는 깊은 풍미의 디쉬
+                </p>
+                <ul class="feature-list">
+                    <li class="feature-item">카쉬 특제 칠리 믹스와 엑스트라 버진 올리브유</li>
+                    <li class="feature-item">탱글한 식감이 살아있는 신선한 로열 타이거 새우</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- Course 03 -->
+        <article class="course-card">
+            <div class="course-img-wrapper">
+                <div class="course-img-container">
+                    <img src="steak.png" alt="프리미엄 비프 스테이크" class="course-img">
+                </div>
+            </div>
+            <div class="course-content">
+                <div class="course-header-meta">
+                    <span class="course-number gold-text">COURSE 03</span>
+                    <span class="course-category">SECOND MAIN</span>
+                </div>
+                <h2 class="course-title">카파도키아보다 특별한 프리미엄 비프 스테이크</h2>
+                <p class="course-desc">
+                    도마카세만의 정교한 시어링 기법으로 겉은 바삭하고 속은 촉촉한 육즙을 완벽히 가둔 최고급 등심 스테이크
+                </p>
+                <ul class="feature-list">
+                    <li class="feature-item">최상급 프라임 등심 완벽 시어링 & 레스팅</li>
+                    <li class="feature-item">구운 허브와 특제 레드와인 가니시의 깊은 조화</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- Course 04 -->
+        <article class="course-card">
+            <div class="course-img-wrapper">
+                <div class="course-img-container">
+                    <img src="miiyeokguk.png" alt="모던 코리안 터치 프리미엄 미역국밥" class="course-img">
+            </div>
+            </div>
+            <div class="course-content">
+                <div class="course-header-meta">
+                    <span class="course-number gold-text">COURSE 04</span>
+                    <span class="course-category">DESSERT / CLOSING</span>
+                </div>
+                <h2 class="course-title">모던 코리안 터치 프리미엄 미역국밥</h2>
+                <p class="course-desc">
+                    식사의 완벽한 마무리를 선사하는 창작 디저트 요리. 오랜 시간 우려낸 미역의 진한 국물로 온기를 더해줍니다.
+                </p>
+                <ul class="feature-list">
+                    <li class="feature-item">청정 완도산 미역과 깊은 육수의 편안한 온기</li>
+                    <li class="feature-item">서양식 코스의 여운을 한국식 개운함으로 승화</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- Summary Section -->
+        <section class="summary-section">
+            <h2 class="summary-title gold-text">SIGNATURE COURSE MENU</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-card-num">01. APPETIZER</div>
+                    <div class="summary-card-name">양파수프</div>
+                    <div class="summary-card-desc">깊은 단맛의 캐러멜라이징 양파와 치즈</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-num">02. FIRST MAIN</div>
+                    <div class="summary-card-name">칠리 감바스</div>
+                    <div class="summary-card-desc">카쉬 해변의 풍미와 타이거 새우</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-num">03. SECOND MAIN</div>
+                    <div class="summary-card-name">비프 스테이크</div>
+                    <div class="summary-card-desc">완벽하게 시어링된 프라임 등심</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-num">04. CLOSING</div>
+                    <div class="summary-card-name">미역국밥</div>
+                    <div class="summary-card-desc">속을 개운하게 감싸주는 온기의 마무리</div>
+                </div>
+            </div>
+            <p class="closing-text">"Exquisite Experience at Domakase"</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; DOMAKASE. ALL RIGHTS RESERVED.</p>
+    </footer>
+</div>
+
+</body>
+</html>
