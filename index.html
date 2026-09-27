@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 아이폰 안전 영역(Safe Area) 및 뷰포트 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>DOMAKASE - Fine Dining Signature Course</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+KR:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -15,12 +16,17 @@
             --text-muted: #9a9ab0;
             --border-gold: rgba(197, 160, 89, 0.3);
             --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            
+            /* 아이폰 17 프로 노치/다이나믹 아일랜드 및 하단 바 여백 보정 */
+            --sab: env(safe-area-inset-bottom, 20px);
+            --sat: env(safe-area-inset-top, 47px);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -28,145 +34,123 @@
             color: var(--text-main);
             font-family: 'Noto Serif KR', serif;
             font-weight: 300;
-            line-height: 1.9;
-            padding: 60px 20px;
+            line-height: 1.7;
+            padding: calc(var(--sat) + 10px) 16px calc(var(--sab) + 30px);
+            max-width: 430px; /* 아이폰 17 프로 너비 스펙에 최적화 */
+            margin: 0 auto;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 70%),
+                radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.1) 0%, transparent 70%),
                 radial-gradient(circle at 50% 100%, rgba(197, 160, 89, 0.05) 0%, transparent 70%);
         }
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        /* Gold Gradient Text Helper */
         .gold-text {
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Header Styling */
+        /* Header - 모바일 맞춤 폰트 크기 및 여백 */
         header {
             text-align: center;
-            padding: 80px 20px 60px;
+            padding: 20px 10px 35px;
             border-bottom: 1px solid var(--border-gold);
-            margin-bottom: 80px;
+            margin-bottom: 35px;
             position: relative;
         }
 
         header::after {
             content: "✦";
             position: absolute;
-            bottom: -12px;
+            bottom: -11px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--bg-dark);
-            padding: 0 15px;
+            padding: 0 10px;
             color: var(--accent-gold);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .brand-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3.8rem;
+            font-size: clamp(2.4rem, 8vw, 2.8rem);
             font-weight: 700;
-            letter-spacing: 12px;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .subtitle {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.9rem;
-            letter-spacing: 6px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
             color: var(--accent-gold-light);
             text-transform: uppercase;
-            margin-bottom: 35px;
+            margin-bottom: 20px;
         }
 
         .main-heading {
-            font-size: 2rem;
+            font-size: 1.35rem;
             font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
             color: var(--text-main);
         }
 
         .dedication {
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             color: var(--accent-gold);
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             font-style: italic;
         }
 
         .intro-text {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            max-width: 620px;
-            margin: 0 auto;
+            font-size: 0.82rem;
             word-break: keep-all;
-            line-height: 2;
+            line-height: 1.7;
+            padding: 0 10px;
         }
 
-        /* Course Item Card */
+        /* Course Card - 아이폰 화면 100% 활용 구조 */
         .course-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-gold);
-            margin-bottom: 70px;
+            margin-bottom: 35px;
             position: relative;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
         }
 
-        .course-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(197, 160, 89, 0.7);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(197, 160, 89, 0.15);
-        }
-
-        /* Elegant Frame Effect Inside Card */
         .course-card::before {
             content: "";
             position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
             border: 1px solid rgba(197, 160, 89, 0.12);
+            border-radius: 5px;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
-        @media (min-width: 768px) {
-            .course-card {
-                flex-direction: row;
-            }
-            .course-card:nth-child(even) {
-                flex-direction: row-reverse;
-            }
-            .course-img-wrapper {
-                width: 48%;
-            }
-            .course-content {
-                width: 52%;
-            }
-        }
-
-        /* Image Frame & Styling */
+        /* 모바일 최적화 이미지 가로세로 비율 (16:10 비율 적용) */
         .course-img-wrapper {
             position: relative;
-            min-height: 320px;
+            width: 100%;
+            padding-top: 62.5%; /* 16:10 Aspect Ratio */
             overflow: hidden;
-            padding: 15px;
         }
 
         .course-img-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 0;
             overflow: hidden;
             border: 1px solid var(--border-gold);
+            border-radius: 4px;
         }
 
         .course-img {
@@ -174,62 +158,54 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            filter: brightness(0.9) contrast(1.05);
-            transition: transform 0.8s ease, filter 0.8s ease;
-        }
-
-        .course-card:hover .course-img {
-            transform: scale(1.06);
-            filter: brightness(1) contrast(1.1);
+            filter: brightness(0.92) contrast(1.05);
         }
 
         /* Content Area */
         .course-content {
-            padding: 45px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            z-index: 2;
+            padding: 22px 20px 25px;
+            z-index: 3;
         }
 
         .course-header-meta {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border-bottom: 1px dashed rgba(197, 160, 89, 0.2);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
         .course-number {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         .course-category {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
             color: var(--text-muted);
             text-transform: uppercase;
         }
 
         .course-title {
-            font-size: 1.45rem;
+            font-size: 1.15rem;
             font-weight: 400;
             color: #ffffff;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             word-break: keep-all;
             line-height: 1.4;
         }
 
         .course-desc {
-            font-size: 0.92rem;
+            font-size: 0.83rem;
             color: var(--text-muted);
-            margin-bottom: 25px;
+            margin-bottom: 16px;
             word-break: keep-all;
+            line-height: 1.65;
         }
 
         .feature-list {
@@ -237,101 +213,101 @@
         }
 
         .feature-item {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--accent-gold-light);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            word-break: keep-all;
         }
 
         .feature-item::before {
             content: "◆";
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             color: var(--accent-gold);
-            margin-right: 10px;
+            margin-right: 8px;
+            margin-top: 5px;
+            flex-shrink: 0;
         }
 
-        /* Summary Section */
+        /* Summary Section - 모바일 2열 그리드 배치 */
         .summary-section {
-            margin-top: 100px;
-            padding: 60px 40px;
+            margin-top: 50px;
+            padding: 30px 18px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-gold);
+            border-radius: 8px;
             position: relative;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
         }
 
         .summary-section::before {
             content: "";
             position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
             border: 1px solid rgba(197, 160, 89, 0.12);
+            border-radius: 5px;
             pointer-events: none;
         }
 
         .summary-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
         }
 
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
         }
 
         .summary-card {
             background: rgba(0, 0, 0, 0.4);
-            padding: 25px 20px;
+            padding: 15px 10px;
             border: 1px solid rgba(197, 160, 89, 0.15);
-            transition: border-color 0.3s;
-        }
-
-        .summary-card:hover {
-            border-color: var(--accent-gold);
+            border-radius: 4px;
         }
 
         .summary-card-num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
             color: var(--accent-gold);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .summary-card-name {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: 400;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             color: #fff;
         }
 
         .summary-card-desc {
-            font-size: 0.82rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             word-break: keep-all;
+            line-height: 1.4;
         }
 
         .closing-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: var(--accent-gold-light);
-            margin-top: 30px;
+            margin-top: 15px;
             font-style: italic;
-            letter-spacing: 1px;
         }
 
         footer {
             text-align: center;
-            padding: 50px 0 20px;
+            padding: 30px 0 10px;
             color: var(--text-muted);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
         }
     </style>
 </head>
@@ -344,7 +320,7 @@
         <h1 class="main-heading">도마카세 시그니처 코스</h1>
         <p class="dedication">오로지 민제만을 위한 프리미엄 레스토랑</p>
         <p class="intro-text">
-            독일, 이탈리아, 프랑스, 튀르키예 유학 생활에서 배운 다채로운 요리 헤리티지를 Dohun 셰프만의 현대적인 감각으로 재해석했습니다.
+            독일, 이탈리아, 프랑스, 튀르키예 유학 생활에서 배운 다채로운 요리 헤리티지를 Dohun 셰프만의 감각으로 재해석했습니다.
         </p>
     </header>
 
@@ -423,7 +399,7 @@
             <div class="course-img-wrapper">
                 <div class="course-img-container">
                     <img src="miiyeokguk.png" alt="모던 코리안 터치 프리미엄 미역국밥" class="course-img">
-            </div>
+                </div>
             </div>
             <div class="course-content">
                 <div class="course-header-meta">
@@ -448,22 +424,22 @@
                 <div class="summary-card">
                     <div class="summary-card-num">01. APPETIZER</div>
                     <div class="summary-card-name">양파수프</div>
-                    <div class="summary-card-desc">깊은 단맛의 캐러멜라이징 양파와 치즈</div>
+                    <div class="summary-card-desc">캐러멜라이징 양파와 치즈</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-card-num">02. FIRST MAIN</div>
                     <div class="summary-card-name">칠리 감바스</div>
-                    <div class="summary-card-desc">카쉬 해변의 풍미와 타이거 새우</div>
+                    <div class="summary-card-desc">카쉬 해변 풍미의 새우</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-card-num">03. SECOND MAIN</div>
                     <div class="summary-card-name">비프 스테이크</div>
-                    <div class="summary-card-desc">완벽하게 시어링된 프라임 등심</div>
+                    <div class="summary-card-desc">시어링된 프라임 등심</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-card-num">04. CLOSING</div>
                     <div class="summary-card-name">미역국밥</div>
-                    <div class="summary-card-desc">속을 개운하게 감싸주는 온기의 마무리</div>
+                    <div class="summary-card-desc">개운한 온기의 마무리</div>
                 </div>
             </div>
             <p class="closing-text">"Exquisite Experience at Domakase"</p>
